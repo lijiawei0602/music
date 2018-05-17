@@ -10,6 +10,8 @@ import { fetchMusicUrl, updateCurrentTime } from '../actions/index.js';
 class App extends Component {
   constructor(props){
     super(props);
+    this.updateCurrentTime = this.updateCurrentTime.bind(this);
+    this.updateVolume = this.updateVolume.bind(this);
   }
 
   componentWillReceiveProps(nextProps){
@@ -39,6 +41,16 @@ class App extends Component {
     }
   }
 
+  updateCurrentTime(time){
+    const { dispatch } = this.props;
+    this.refs.audio.currentTime = time;
+    dispatch(updateCurrentTime(time));
+  }
+
+  updateVolume(percent){
+    this.refs.audio.volume = percent;
+  }
+
   render() {
     return (
       <div className="App">
@@ -46,7 +58,7 @@ class App extends Component {
           <h1 className="App-title">在线音乐播放器</h1>
           <div className="App-login">登录</div>
         </header>
-        <Music></Music>
+        <Music updateCurrentTime={this.updateCurrentTime} updateVolume={this.updateVolume}></Music>
         <audio ref="audio"></audio>
       </div>
     );

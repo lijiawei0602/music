@@ -52,7 +52,7 @@ class Music extends Component{
                     </div>
                 </div>
                 <div className="Music-bar">
-                    <Bar currentSong={this.props.currentSong} currentTime={this.props.currentTime}></Bar>
+                    <Bar currentSong={this.props.currentSong} currentTime={this.props.currentTime} updateCurrentTime={this.props.updateCurrentTime} updateVolume={this.props.updateVolume}></Bar>
                 </div>
                 <div className="Music-bg" ref="bg"></div>
                 <div className="Music-mask"></div>

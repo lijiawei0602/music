@@ -5,6 +5,43 @@ import '../assets/css/Lyric.less';
 class Lyric extends Component{
     constructor(props){
         super(props);
+        this.state = {
+            lyricIndex: 0,
+            top: 0
+        }
+    }
+
+    componentDidMount(){
+        const lyric = this.refs.lyric;
+        let top = Math.floor(lyric.offsetHeight / 34 / 2);
+            this.setState({
+                top: top
+        })
+
+        window.onresize = (function(){
+            let top = Math.floor(lyric.offsetHeight / 34 / 2);
+            this.setState({
+                top: top
+            })
+        }).bind(this);
+
+    }
+
+    componentWillReceiveProps(nextProps){
+        let lyricIndex = 0;
+        if(nextProps.currentSong && nextProps.lyric && nextProps.currentTime){
+            let currentSong = nextProps.currentSong;;
+            let lyric = this.parseLyric(nextProps.lyric);
+            let currentTime = this.filterTime(nextProps.currentTime);
+            for(let i=0; i<lyric.length; i++){
+                if(currentTime >= lyric[i].time){
+                    lyricIndex = i;
+                }
+            }
+            this.setState({
+                lyricIndex: lyricIndex
+            });
+        }
     }
 
     parseLyric(lyric){
@@ -33,11 +70,16 @@ class Lyric extends Component{
         return lyrArr;
     }
 
+    filterTime(time){
+        let t = time.split(":");
+        return Number(Number(t[0]) * 60  + Number(t[1]));
+    }
+
     render(){
         const lyrArr = this.parseLyric(this.props.lyric);
         if(!this.props.currentSong){
             return (
-                <div className="Lyric">
+                <div className="Lyric" ref="lyric">
                         <div className="Lyric-item noCurrrent">
                             还没有播放音乐哦~
                         </div>
@@ -46,11 +88,11 @@ class Lyric extends Component{
         }
 
         return (
-            <div className="Lyric">
-                    <div className="Lyric-item">
+            <div className="Lyric" ref="lyric">
+                    <div className="Lyric-item" ref="lyricItem" style={{transform: `translateY(${-34 * (this.state.lyricIndex - this.state.top)}px)`}}>
                         {
                             lyrArr.map((item,index) => {
-                                return <p key={index}>{item.text}</p>
+                                return <p key={index} className={this.state.lyricIndex === index? "on":""}>{item.text}</p>
                             })
                         }
                     </div>

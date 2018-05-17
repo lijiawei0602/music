@@ -22,7 +22,7 @@ class Main extends Component{
         return (
             <div className="Main">
                 <Info currentSong={this.props.currentSong}></Info> 
-                <Lyric currentSong={this.props.currentSong} lyric={this.props.lyric}></Lyric>
+                <Lyric currentSong={this.props.currentSong} lyric={this.props.lyric} currentTime={this.props.currentTime}></Lyric>
             </div> 
         )
     }
@@ -31,6 +31,7 @@ class Main extends Component{
 const mapStateToProps = (state, ownProps) => {
     return {
         lyric: state.Main.lyric,
+        currentTime: state.currentSong.currentTime
     }
 }
 
