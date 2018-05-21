@@ -103,11 +103,18 @@ export function updateCurrentTime(time){
     }
 }
 
+//更新currentIndex
+export function updateCurrentIndex(index){
+    return {
+        type: types.UPDATE_CURRENTINDEX,
+        currentIndex: index
+    }
+}
 
 
 function filterPlaylist(json){
     let arr = [];
-    json.map(item => {
+    json.forEach(item => {
         if(item.id){
             var foo = {
                 id: item.id,

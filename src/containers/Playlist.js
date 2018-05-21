@@ -1,18 +1,32 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { requestPlaylist } from '../actions/index.js';
+import { requestPlaylist, switchAudio, updateCurrentIndex } from '../actions/index.js';
 import '../assets/css/Playlist.less';
 import List from '../components/List.js';
 
 class Playlist extends Component{
     constructor(props){
         super(props);
+        this.getCurrentSong = this.getCurrentSong.bind(this);
     }
 
     componentDidMount(){
         const { dispatch } = this.props;
         dispatch(requestPlaylist());
+    }
+
+    getCurrentSong(index){
+        const { dispatch } = this.props;
+        if(this.props.currentIndex === index){
+            if(this.props.audioState === "play"){
+                dispatch(switchAudio("pause"));
+            }else{
+                dispatch(switchAudio("play"));
+            }
+        }else{
+            dispatch(updateCurrentIndex(index));
+        }
     }
 
     render(){
@@ -24,7 +38,7 @@ class Playlist extends Component{
                     <span className="Playlist-time">时长</span>
                 </div>
                 <div className="Playlist-content">
-                    <List items={this.props.items} getCurrentSong={this.props.getCurrentSong}></List>
+                    <List items={this.props.items} currentIndex={this.props.currentIndex} audioState={this.props.audioState} getCurrentSong={this.getCurrentSong}></List>
                 </div>
             </div>
         )
@@ -33,7 +47,9 @@ class Playlist extends Component{
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        items: state.playlist.items
+        items: state.playlist.items,
+        currentIndex: state.currentSong.currentIndex,
+        audioState: state.currentSong.audioState
     }
 }
 

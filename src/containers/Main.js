@@ -14,15 +14,19 @@ class Main extends Component{
     
     componentWillReceiveProps(nextProps){
         const { dispatch } = this.props;
-        const id = nextProps.currentSong.id;
-        dispatch(fetchLyric(id));
+        if(nextProps.currentSong !== this.props.currentSong){  
+            if(nextProps.currentSong.id){
+                let id = nextProps.currentSong.id;
+                dispatch(fetchLyric(id));
+            }
+        }
     }
 
     render(){
         return (
             <div className="Main">
                 <Info currentSong={this.props.currentSong}></Info> 
-                <Lyric currentSong={this.props.currentSong} lyric={this.props.lyric} currentTime={this.props.currentTime}></Lyric>
+                <Lyric changeLayout={this.props.changeLayout} currentSong={this.props.currentSong} lyric={this.props.lyric} currentTime={this.props.currentTime}></Lyric>
             </div> 
         )
     }

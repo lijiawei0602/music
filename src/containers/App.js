@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import logo from '../assets/img/logo.svg';
 import '../assets/css/App.css';
 import Music from './Music.js';
 import { fetchMusicUrl, updateCurrentTime } from '../actions/index.js';
@@ -16,9 +15,11 @@ class App extends Component {
 
   componentWillReceiveProps(nextProps){
     const { dispatch } = this.props;
-    if(nextProps.currentSong){
-      const id = nextProps.currentSong.id;
-      dispatch(fetchMusicUrl(id));
+    if(nextProps.currentSong !== this.props.currentSong){
+      if(nextProps.currentSong.id){ 
+        const id = nextProps.currentSong.id;
+        dispatch(fetchMusicUrl(id));
+      }
     }
     if(nextProps.musicUrl !== this.props.musicUrl){
       this.refs.audio.src = nextProps.musicUrl;

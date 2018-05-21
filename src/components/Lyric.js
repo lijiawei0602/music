@@ -7,8 +7,10 @@ class Lyric extends Component{
         super(props);
         this.state = {
             lyricIndex: 0,
-            top: 0
+            top: 0,
+            flag: false
         }
+        this.changeLayout = this.changeLayout.bind(this);
     }
 
     componentDidMount(){
@@ -30,7 +32,6 @@ class Lyric extends Component{
     componentWillReceiveProps(nextProps){
         let lyricIndex = 0;
         if(nextProps.currentSong && nextProps.lyric && nextProps.currentTime){
-            let currentSong = nextProps.currentSong;;
             let lyric = this.parseLyric(nextProps.lyric);
             let currentTime = this.filterTime(nextProps.currentTime);
             for(let i=0; i<lyric.length; i++){
@@ -57,7 +58,7 @@ class Lyric extends Component{
             for(let m=0, n=timeRegExp.length; m<n; m++){
                 let t = timeRegExp[m];
                 let min = Number(String(t.match(/\[\d*/i)).slice(1));
-                let sec = Number(String(t.match(/\:\d*/i)).slice(1));
+                let sec = Number(String(t.match(/:\d*/i)).slice(1));
                 let time = min * 60 + sec;
                 if(text !== ""){
                     lyrArr.push({
@@ -75,6 +76,14 @@ class Lyric extends Component{
         return Number(Number(t[0]) * 60  + Number(t[1]));
     }
 
+    changeLayout(){
+        this.setState({
+            flag: !this.state.flag
+        });
+
+        this.props.changeLayout(this.state.flag);
+    }
+
     render(){
         const lyrArr = this.parseLyric(this.props.lyric);
         if(!this.props.currentSong){
@@ -88,7 +97,7 @@ class Lyric extends Component{
         }
 
         return (
-            <div className="Lyric" ref="lyric">
+            <div onDoubleClick={this.changeLayout} className="Lyric" ref="lyric">
                     <div className="Lyric-item" ref="lyricItem" style={{transform: `translateY(${-34 * (this.state.lyricIndex - this.state.top)}px)`}}>
                         {
                             lyrArr.map((item,index) => {

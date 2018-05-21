@@ -7,26 +7,18 @@ class List extends Component{
         super(props);
     }
 
-    componentWillReceiveProps(nextProps){
-        if(nextProps !== this.props){
-            const item = nextProps.items[0];
-            this.props.getCurrentSong(item);
-        }
-        
-    }
-
     render(){
         return (
             <div className="List">
                 {
                     this.props.items.map((item,index) => {
                         return (
-                            <div key={index} className="List-main">
+                            <div key={index} className={this.props.currentIndex === index && this.props.audioState === "play"? "List-main on" : "List-main"}>
                                 <span className="List-index">{ index+1 }</span>
                                 <div className="List-name">
                                     { item.name }
                                     <div className="List-menu">
-                                        <span className="List-menu-play"></span>
+                                        <span className="List-menu-play" onClick={() => {this.props.getCurrentSong(index)}}></span>
                                     </div>
                                 </div>
                                 <span className="List-author">{ item.author }</span>

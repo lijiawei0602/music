@@ -3,7 +3,7 @@ import { routerReducer } from 'react-router-redux';
 import * as types from '../constants/actionTypes.js';
 
 const initialState = {
-    items: []
+    items: [],
 };
 
 function playlist(state=initialState, action){
@@ -24,7 +24,7 @@ function Main(state={ lyric: '' }, action){
     }
 }
 
-function currentSong(state={}, action){
+function currentSong(state={currentIndex: 0, audioState: "pause"}, action){
     switch(action.type){
         case types.RECEIVE_CURRENTSONG:
             return Object.assign({}, state, {currentSong: action.currentSong});
@@ -34,6 +34,8 @@ function currentSong(state={}, action){
             return Object.assign({}, state, {audioState: action.audioState});
         case types.UPDATE_CURRENTTIME:
             return Object.assign({}, state, {currentTime: action.currentTime});
+        case types.UPDATE_CURRENTINDEX:
+            return Object.assign({}, state, {currentIndex: action.currentIndex});
         default:
             return state;
     }

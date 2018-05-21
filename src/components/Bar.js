@@ -32,7 +32,7 @@ class Bar extends Component{
         this.barMove = this.barMove.bind(this);
         this.barUp = this.barUp.bind(this);
         this.volumeClick = this.volumeClick.bind(this);
-        this,this.volumeDown = this.volumeDown.bind(this);
+        this.volumeDown = this.volumeDown.bind(this);
         this.volumeMove = this.volumeMove.bind(this);
         this.volumeUp = this.volumeUp.bind(this);
         this.volumeIco = this.volumeIco.bind(this);
@@ -214,9 +214,9 @@ class Bar extends Component{
         return (
             <div className="Bar">
                 <div className="Bar-btn">
-                    <i className="Bar-btn-icon btn-pre" title="上一曲"></i>
-                    <i className={ this.state.isPlay? 'Bar-btn-icon btn-pause': 'Bar-btn-icon btn-play' } title="播放暂停" onClick={this.switchAudio}></i>
-                    <i className="Bar-btn-icon btn-next" title="下一曲"></i>
+                    <i className="Bar-btn-icon btn-pre" title="上一曲" onClick={this.props.prevClick}></i>
+                    <i className={ this.props.audioState === "play"? 'Bar-btn-icon btn-pause': 'Bar-btn-icon btn-play' } title="播放暂停" onClick={this.switchAudio}></i>
+                    <i className="Bar-btn-icon btn-next" title="下一曲" onClick={this.props.nextClick}></i>
                 </div>
                 <div className="Bar-music">
                     <div className="Bar-music-info">{this.props.currentSong.name} - {this.props.currentSong.author}</div>

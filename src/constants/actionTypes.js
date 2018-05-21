@@ -16,3 +16,5 @@ export const RECEIVE_MUSICURL = "RECEIVE_MUSICURL";
 export const SWITCH_AUDIO = "SWITCH_AUDIO";
 //更新currentTime
 export const UPDATE_CURRENTTIME = "UPDATE_CURRENTTIME";
+//更新currentIndex
+export const UPDATE_CURRENTINDEX = "UPDATE_CURRENTINDEX";
