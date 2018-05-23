@@ -111,6 +111,21 @@ export function updateCurrentIndex(index){
     }
 }
 
+//删除playList
+export function updatePlayList(items){
+    return {
+        type: types.UPDATE_PLAYLIST,
+        items
+    }
+}
+
+//切换audioMode
+export function switchAudioMode(mode){
+    return {
+        type: types.SWITCH_AUDIOMODE,
+        mode
+    }
+}
 
 function filterPlaylist(json){
     let arr = [];

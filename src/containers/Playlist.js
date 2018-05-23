@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { requestPlaylist, switchAudio, updateCurrentIndex } from '../actions/index.js';
+import { requestPlaylist, switchAudio, updateCurrentIndex, updatePlayList } from '../actions/index.js';
 import '../assets/css/Playlist.less';
 import List from '../components/List.js';
 
@@ -9,6 +9,7 @@ class Playlist extends Component{
     constructor(props){
         super(props);
         this.getCurrentSong = this.getCurrentSong.bind(this);
+        this.updatePlayList = this.updatePlayList.bind(this);
     }
 
     componentDidMount(){
@@ -29,6 +30,14 @@ class Playlist extends Component{
         }
     }
 
+    updatePlayList(index){
+        const { dispatch } = this.props;
+        let newPlayList = this.props.items.filter((item,jndex) => {
+            return jndex !== index;
+        });
+        dispatch(updatePlayList(newPlayList));
+    }
+
     render(){
         return(
             <div className="Playlist">
@@ -38,7 +47,7 @@ class Playlist extends Component{
                     <span className="Playlist-time">时长</span>
                 </div>
                 <div className="Playlist-content">
-                    <List items={this.props.items} currentIndex={this.props.currentIndex} audioState={this.props.audioState} getCurrentSong={this.getCurrentSong}></List>
+                    <List items={this.props.items} currentIndex={this.props.currentIndex} audioState={this.props.audioState} getCurrentSong={this.getCurrentSong} updatePlayList={this.updatePlayList}></List>
                 </div>
             </div>
         )

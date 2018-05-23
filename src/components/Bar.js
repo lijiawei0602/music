@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
+import { Link } from 'react-router-dom';
+  
 import '../assets/css/Bar.less';
-import { switchAudio } from '../actions/index';
+import { switchAudio, switchAudioMode } from '../actions/index';
 
 class Bar extends Component{
     static defaultProps = {
@@ -36,6 +37,7 @@ class Bar extends Component{
         this.volumeMove = this.volumeMove.bind(this);
         this.volumeUp = this.volumeUp.bind(this);
         this.volumeIco = this.volumeIco.bind(this);
+        this.switchMode = this.switchMode.bind(this);
     }  
 
     componentDidMount(){
@@ -52,6 +54,13 @@ class Bar extends Component{
             let allWidth = this.refs.prog.clientWidth - this.props.dotWidth;
             let progWidth = percent * allWidth;
             this.moveTo(progWidth);
+        }
+        if(nextProps.audioMode !== this.props.audioMode){
+            let mode = this.refs.mode;
+            let title = this.modeTitle(nextProps.audioMode);
+            let classname = this.modeClass(nextProps.audioMode);
+            mode.setAttribute("title", title);
+            mode.className = classname;
         }
     }
 
@@ -207,6 +216,58 @@ class Bar extends Component{
         return Number(Number(t[0]) * 60  + Number(t[1]));
     }
 
+    modeTitle(mode){
+        switch(mode){
+            case "order":
+                return "顺序播放";
+            case "loop":
+                return "单曲循环";
+            case "random":
+                return "随机播放";
+            case "list-loop":
+                return "列表循环";
+            default:
+                break;
+        }
+    }
+
+    modeClass(mode){
+        switch(mode){
+            case "order":
+                return "Bar-mode mode-order";
+            case "loop":
+                return "Bar-mode mode-loop";
+            case "random":
+                return "Bar-mode mode-random";
+            case "list-loop":
+                return "Bar-mode mode-listLoop";
+            default:
+                break;
+        }
+    }
+
+    switchMode(){
+        const { dispatch } = this.props;
+        let modeArr = ["order", "loop", "random", "list-loop"];
+        let mode = this.props.audioMode;
+        switch(mode){
+            case modeArr[0]:
+                dispatch(switchAudioMode(modeArr[1]));
+                break;
+            case modeArr[1]:
+                dispatch(switchAudioMode(modeArr[2]));
+                break;
+            case modeArr[2]:
+                dispatch(switchAudioMode(modeArr[3]));
+                break;
+            case modeArr[3]:
+                dispatch(switchAudioMode(modeArr[0]));
+                break;
+            default:
+                break;
+        }
+    }
+
     render(){
         if(!this.props.currentSong){
             return null;
@@ -228,8 +289,8 @@ class Bar extends Component{
                         </div>
                     </div>
                 </div>
-                <div className="Bar-mode mode-order" title="顺序播放"></div>
-                <div className="Bar-comment" title="评论"></div>
+                <div className="Bar-mode mode-order" ref="mode" title="顺序播放" onClick={this.switchMode}></div>
+                <div className="Bar-comment" title="评论"><Link to="/comment"></Link></div>
                 <div className="Bar-volume" title="音量">
                     <i className="btn-volume" onClick={this.volumeIco} ref="volumeIco"></i>
                     <div className="Bar-music-prog" ref="vprog" onClick={this.volumeClick}>

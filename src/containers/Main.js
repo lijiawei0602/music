@@ -8,9 +8,9 @@ import { fetchLyric } from '../actions';
 
 
 class Main extends Component{
-    constructor(porps){
-        super(porps);
-    }
+    // constructor(porps){
+    //     super(porps);
+    // }
     
     componentWillReceiveProps(nextProps){
         const { dispatch } = this.props;

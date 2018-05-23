@@ -24,7 +24,7 @@ class List extends Component{
                                 <span className="List-author">{ item.author }</span>
                                 <span className="List-time">
                                     <span>{ item.duration }</span>
-                                    <i className="List-menu-del"></i>
+                                    <i className="List-menu-del" onClick={() => {this.props.updatePlayList(index)}}></i>
                                 </span>
                             </div>
                         )

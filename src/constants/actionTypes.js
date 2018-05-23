@@ -18,3 +18,7 @@ export const SWITCH_AUDIO = "SWITCH_AUDIO";
 export const UPDATE_CURRENTTIME = "UPDATE_CURRENTTIME";
 //更新currentIndex
 export const UPDATE_CURRENTINDEX = "UPDATE_CURRENTINDEX";
+//更新playList
+export const UPDATE_PLAYLIST = "UPDATE_PLAYLIST";
+//切换audioMode
+export const SWITCH_AUDIOMODE = "SWITCH_AUDIOMODE";

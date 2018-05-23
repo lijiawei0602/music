@@ -3,54 +3,13 @@ import { connect } from 'react-redux';
 
 import '../assets/css/App.css';
 import Music from './Music.js';
-import { fetchMusicUrl, updateCurrentTime } from '../actions/index.js';
 
 
 class App extends Component {
   constructor(props){
     super(props);
-    this.updateCurrentTime = this.updateCurrentTime.bind(this);
-    this.updateVolume = this.updateVolume.bind(this);
   }
 
-  componentWillReceiveProps(nextProps){
-    const { dispatch } = this.props;
-    if(nextProps.currentSong !== this.props.currentSong){
-      if(nextProps.currentSong.id){ 
-        const id = nextProps.currentSong.id;
-        dispatch(fetchMusicUrl(id));
-      }
-    }
-    if(nextProps.musicUrl !== this.props.musicUrl){
-      this.refs.audio.src = nextProps.musicUrl;
-    }
-    if(nextProps.audioState){
-      const audio = this.refs.audio;
-      let currentTime;
-
-      audio.addEventListener("timeupdate", function(){
-        currentTime = audio.currentTime;
-        dispatch(updateCurrentTime(currentTime));
-      },false);
-
-      if(nextProps.audioState === "play"){
-        audio.play();
-      }
-      else{
-        audio.pause();
-      }
-    }
-  }
-
-  updateCurrentTime(time){
-    const { dispatch } = this.props;
-    this.refs.audio.currentTime = time;
-    dispatch(updateCurrentTime(time));
-  }
-
-  updateVolume(percent){
-    this.refs.audio.volume = percent;
-  }
 
   render() {
     return (
@@ -59,19 +18,11 @@ class App extends Component {
           <h1 className="App-title">在线音乐播放器</h1>
           <div className="App-login">登录</div>
         </header>
-        <Music updateCurrentTime={this.updateCurrentTime} updateVolume={this.updateVolume}></Music>
-        <audio ref="audio"></audio>
+        {this.props.children}
+        {/* <Music></Music> */}
       </div>
     );
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  return {
-    currentSong: state.currentSong.currentSong,
-    musicUrl: state.currentSong.musicUrl,
-    audioState: state.currentSong.audioState
-  }
-}
-
-export default connect(mapStateToProps)(App);
+export default App;
