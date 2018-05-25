@@ -127,6 +127,35 @@ export function switchAudioMode(mode){
     }
 }
 
+function receiveComment(comment){
+    return {
+        type: types.RECEIVE_COMMENT,
+        comment
+    }
+}
+
+export function fetchComment(id, limit=20){
+    return dispatch => {
+        api.getMusicComment(id,limit).then(res => {
+            return res;
+        }).then(json => {
+            dispatch(receiveComment(json));
+        }).catch(e => {
+            console.log(e);
+        });
+    };
+}
+
+
+
+
+
+
+
+
+
+
+
 function filterPlaylist(json){
     let arr = [];
     json.forEach(item => {

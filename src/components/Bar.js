@@ -49,11 +49,13 @@ class Bar extends Component{
     }
 
     componentWillReceiveProps(nextProps){
-        if(nextProps.currentSong.duration && nextProps.currentTime){
-            let percent = this.filterTime(nextProps.currentTime) / this.filterTime(nextProps.currentSong.duration);
-            let allWidth = this.refs.prog.clientWidth - this.props.dotWidth;
-            let progWidth = percent * allWidth;
-            this.moveTo(progWidth);
+        if(nextProps.currentSong && nextProps.currentTime){
+            if(nextProps.currentSong.duration){
+                let percent = this.filterTime(nextProps.currentTime) / this.filterTime(nextProps.currentSong.duration);
+                let allWidth = this.refs.prog.clientWidth - this.props.dotWidth;
+                let progWidth = percent * allWidth;
+                this.moveTo(progWidth);
+            }
         }
         if(nextProps.audioMode !== this.props.audioMode){
             let mode = this.refs.mode;
@@ -290,7 +292,7 @@ class Bar extends Component{
                     </div>
                 </div>
                 <div className="Bar-mode mode-order" ref="mode" title="顺序播放" onClick={this.switchMode}></div>
-                <div className="Bar-comment" title="评论"><Link to="/comment"></Link></div>
+                <div className="Bar-comment" title="评论"><Link to={`/comment/${this.props.items[this.props.currentIndex].id}`}></Link></div>
                 <div className="Bar-volume" title="音量">
                     <i className="btn-volume" onClick={this.volumeIco} ref="volumeIco"></i>
                     <div className="Bar-music-prog" ref="vprog" onClick={this.volumeClick}>

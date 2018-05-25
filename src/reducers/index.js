@@ -40,6 +40,8 @@ function currentSong(state={currentIndex: 0, audioState: "pause", audioMode: "or
             return Object.assign({}, state, {currentIndex: action.currentIndex});
         case types.SWITCH_AUDIOMODE:
             return Object.assign({}, state, {audioMode: action.mode});
+        case types.RECEIVE_COMMENT:
+            return Object.assign({}, state, {comment: action.comment});
         default:
             return state;
     }

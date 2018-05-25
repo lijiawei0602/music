@@ -23,3 +23,8 @@ export function getMusicUrl(id){
     const url = `${URL}/music/url?id=${id}`;
     return axios(url);
 }
+//获取音乐评论
+export function getMusicComment(id,limit=20){
+    const url= `${URL}/comment/music?id=${id}&limit=${limit}`;
+    return axios(url);
+}

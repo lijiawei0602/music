@@ -19,7 +19,7 @@ export default (
 			<Route path="/search" component={Search}></Route>
 			<Route path="/mylist" component={Mylist}></Route>
 			<Route path="/history" component={History}></Route>
-			<Route path="/comment" component={Comment}></Route>
+			<Route path="/comment/:id" component={Comment}></Route>
 		</Music>
 	</App>
 );

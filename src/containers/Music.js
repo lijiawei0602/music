@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
 
 import '../assets/css/Music.less';
 import Playlist from './Playlist';
@@ -172,7 +172,7 @@ class Music extends Component{
                     </div>
                 </div>
                 <div className="Music-bar">
-                    <Bar currentSong={this.props.currentSong} currentTime={this.props.currentTime} audioState={this.props.audioState} audioMode={this.props.audioMode} updateCurrentTime={this.updateCurrentTime} updateVolume={this.updateVolume} prevClick={this.prevClick} nextClick={this.nextClick}></Bar>
+                    <Bar items={this.props.items} currentIndex={this.props.currentIndex} currentSong={this.props.currentSong} currentTime={this.props.currentTime} audioState={this.props.audioState} audioMode={this.props.audioMode} updateCurrentTime={this.updateCurrentTime} updateVolume={this.updateVolume} prevClick={this.prevClick} nextClick={this.nextClick}></Bar>
                 </div>
                 <div className="Music-bg" ref="bg"></div>
                 <div className="Music-mask"></div>
@@ -194,4 +194,4 @@ const mapStateToProps = (state, ownProps) => {
     }
 }
 
-export default connect(mapStateToProps)(Music);
+export default withRouter(connect(mapStateToProps)(Music));
