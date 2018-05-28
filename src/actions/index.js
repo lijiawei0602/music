@@ -154,6 +154,7 @@ export function fetchComment(id, limit=20,offset=0){
     };
 }
 
+//继续拉取歌曲最新评论
 export function reFetchComment(id,limit=20,offset=0,hotComment,lastNewComment){
     return dispatch => {
         api.getMusicComment(id,limit,offset).then(res => {
@@ -167,8 +168,47 @@ export function reFetchComment(id,limit=20,offset=0,hotComment,lastNewComment){
     }
 }
 
+//接收榜单
+function receiveTop(top){
+    return{
+        type: types.RECEIV_TOP,
+        top
+    }
+}
 
+export function fetchTop(){
+    return dispatch => {
+        api.getTop().then(res => {
+            return res.data;
+        }).then(json => {
+            let list = json.list.filter(item => {
+                return item.ToplistType !== undefined;
+            });
+            dispatch(receiveTop(list));
+        }).catch(e => {
+            console.log(e);
+        });
+    };
+}
 
+function receivePersonalized(personal){
+    return {
+        type: types.RECEIVE_PERSONALIZED,
+        personal
+    }
+}
+
+export function fetchPersonalized(){
+    return dispatch => {
+        api.getPersonalized().then(res => {
+            return res.data;
+        }).then(json => {
+            dispatch(receivePersonalized(json.result));
+        }).catch(e=> {
+            console.log(e);
+        });
+    };
+}
 
 
 

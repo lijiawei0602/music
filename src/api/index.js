@@ -28,3 +28,15 @@ export function getMusicComment(id,limit=20,offset=0){
     const url= `${URL}/comment/music?id=${id}&limit=${limit}&offset=${offset}`;
     return axios(url);
 }
+
+//获取榜单
+export function getTop(){
+    const url = `${URL}/toplist/detail`;
+    return axios(url);
+}
+
+//获取推荐歌单
+export function getPersonalized(){
+    const url = `${URL}/personalized`;
+    return axios(url);
+}

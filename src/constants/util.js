@@ -12,7 +12,7 @@ export function parseLyric(lyric){
         for(let m=0, n=timeRegExp.length; m<n; m++){
             let t = timeRegExp[m];
             let min = Number(String(t.match(/\[\d*/i)).slice(1));
-            let sec = Number(String(t.match(/\:\d*/i)).slice(1));
+            let sec = Number(String(t.match(/:\d*/i)).slice(1));
             let time = min * 60 + sec;
             if(text !== ""){
                 lyrArr.push({

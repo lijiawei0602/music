@@ -18,6 +18,7 @@ class Music extends Component{
         this.updateCurrentTime = this.updateCurrentTime.bind(this);
         this.updateVolume = this.updateVolume.bind(this);
         this.changeMode = this.changeMode.bind(this);
+        this.selectBtn = this.selectBtn.bind(this);
     }
 
     componentDidMount(){
@@ -47,6 +48,9 @@ class Music extends Component{
         if(nextProps.currentSong && this.props.currentSong){
             if(nextProps.currentSong.url !== this.props.currentSong.url){
                 dispatch(switchAudio("play"));
+                let author = nextProps.currentSong.author;
+                let name = nextProps.currentSong.name;
+                document.title = `${name} - ${author}`;
             }
         }
 
@@ -148,19 +152,22 @@ class Music extends Component{
         dispatch(updateCurrentTime(time));
     }
 
-
+    selectBtn(e){
+        console.log(e.target.parentNode.children);
+        // e.target.parentNode.children
+    }
 
     render(){
         return(
             <div className="Music">
                 <div className="Music-content">
                     <div className="Music-left" ref="left">
-                        <div className="Music-nav">
-                            <NavLink to="/playlist" className="Music-nav-btn on">正在播放</NavLink>
-                            <NavLink to="/top" className="Music-nav-btn">排行榜</NavLink>
-                            <NavLink to="/search" className="Music-nav-btn">搜索</NavLink>
-                            <NavLink to="/mylist" className="Music-nav-btn">我的歌单</NavLink>
-                            <NavLink to="/history" className="Music-nav-btn">我听过的</NavLink>
+                        <div className="Music-nav" onClick={this.selectBtn}>
+                            <NavLink to="/playlist" className="Music-nav-btn" activeClassName="active">正在播放</NavLink>
+                            <NavLink to="/top" className="Music-nav-btn" activeClassName="active">排行榜</NavLink>
+                            <NavLink to="/search" className="Music-nav-btn" activeClassName="active">搜索</NavLink>
+                            <NavLink to="/mylist" className="Music-nav-btn" activeClassName="active">我的歌单</NavLink>
+                            <NavLink to="/history" className="Music-nav-btn" activeClassName="active">我听过的</NavLink>
                         </div>
                         <div className="Music-main">
                             {/* <Playlist></Playlist> */}

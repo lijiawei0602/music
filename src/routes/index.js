@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Redirect, Switch } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 
 import App from '../containers/App.js';
 import Music from '../containers/Music.js';
@@ -14,6 +14,7 @@ export default (
 	<App>
 		<Music>
 			<Route exact path='/' component={Playlist}/>
+			<Redirect to="/playlist"></Redirect>
 			<Route path="/playlist" component={Playlist}></Route>
 			<Route path="/top" component={Top}></Route>
 			<Route path="/search" component={Search}></Route>

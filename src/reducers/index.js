@@ -49,9 +49,21 @@ function currentSong(state={currentIndex: 0, audioState: "pause", audioMode: "or
     }
 }
 
+function top(state={}, action){
+    switch(action.type){
+        case types.RECEIV_TOP:
+            return Object.assign({}, state, {toplist: action.top});
+        case types.RECEIVE_PERSONALIZED:
+            return Object.assign({}, state, {personal: action.personal});
+        default:
+            return state;
+    }
+}
+
 export default combineReducers({
     playlist,
     Main,
     currentSong,
+    top,
 	routing:routerReducer
 });
