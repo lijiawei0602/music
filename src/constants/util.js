@@ -24,3 +24,41 @@ export function parseLyric(lyric){
     }
     return lyrArr;
 }
+
+//函数节流
+export function _throttle(fn,delay=200){
+    // let first = true,
+    //     self = fn,
+    //     timer;
+    // return function(){
+    //     let args = arguments,
+    //         that = this;
+    //     if(first){
+    //         self.apply(that, args);
+    //         return first = false;
+    //     }
+    //     if(timer){
+    //         return false;
+    //     }
+    //     timer = setTimeout(function(){
+    //         self.apply(that, args);
+    //     }, interval)
+    // }
+    let timer;
+    let first = true;
+    return function(){
+        var args = arguments;
+        if(first){
+            fn.apply(this, arguments);
+            return first = false;
+        }
+        if(timer){
+            return false;
+        }
+        timer = setTimeout(() => {
+            clearTimeout(timer);
+            timer  = null;
+            fn.apply(this, args);
+        }, delay || 300)
+    }
+}

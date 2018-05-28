@@ -22,5 +22,7 @@ export const UPDATE_CURRENTINDEX = "UPDATE_CURRENTINDEX";
 export const UPDATE_PLAYLIST = "UPDATE_PLAYLIST";
 //切换audioMode
 export const SWITCH_AUDIOMODE = "SWITCH_AUDIOMODE";
-//接收歌曲评论
-export const RECEIVE_COMMENT = "RECEIVE_COMMENT";
+//接收歌曲精彩评论  
+export const RECEIVE_HOTCOMMENT = "RECEIVE_HOTCOMMENT";
+//接收歌曲最新评论
+export const RECEIVE_NEWCOMMENT = "RECEIVE_NEWCOMMENT";

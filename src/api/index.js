@@ -24,7 +24,7 @@ export function getMusicUrl(id){
     return axios(url);
 }
 //获取音乐评论
-export function getMusicComment(id,limit=20){
-    const url= `${URL}/comment/music?id=${id}&limit=${limit}`;
+export function getMusicComment(id,limit=20,offset=0){
+    const url= `${URL}/comment/music?id=${id}&limit=${limit}&offset=${offset}`;
     return axios(url);
 }

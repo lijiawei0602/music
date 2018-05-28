@@ -127,25 +127,45 @@ export function switchAudioMode(mode){
     }
 }
 
-function receiveComment(comment){
+function receiveHotComment(comment){
     return {
-        type: types.RECEIVE_COMMENT,
+        type: types.RECEIVE_HOTCOMMENT,
         comment
     }
 }
 
-export function fetchComment(id, limit=20){
+function receiveNewComment(comment){
+    return {
+        type: types.RECEIVE_NEWCOMMENT,
+        comment
+    }
+}
+
+export function fetchComment(id, limit=20,offset=0){
     return dispatch => {
-        api.getMusicComment(id,limit).then(res => {
-            return res;
+        api.getMusicComment(id,limit,offset).then(res => {
+            return res.data;
         }).then(json => {
-            dispatch(receiveComment(json));
+            dispatch(receiveHotComment(json.hotComments));
+            dispatch(receiveNewComment(json.comments));
         }).catch(e => {
             console.log(e);
         });
     };
 }
 
+export function reFetchComment(id,limit=20,offset=0,hotComment,lastNewComment){
+    return dispatch => {
+        api.getMusicComment(id,limit,offset).then(res => {
+            return res.data;
+        }).then(json => {
+            dispatch(receiveHotComment(hotComment));
+            dispatch(receiveNewComment(lastNewComment.concat(json.comments)));
+        }).catch(e => {
+            console.log(e);
+        });
+    }
+}
 
 
 
