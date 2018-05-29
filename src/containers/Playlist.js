@@ -14,10 +14,15 @@ class Playlist extends Component{
 
     componentDidMount(){
         const { dispatch } = this.props;
-        dispatch(requestPlaylist());
+        let items = this.props.items;
+        dispatch(requestPlaylist(items));
     }
 
-    getCurrentSong(index){
+    // componentWillReceiveProps(nextProps){
+    //     console.log(nextProps.items);
+    // }
+
+    getCurrentSong(id,index){
         const { dispatch } = this.props;
         if(this.props.currentIndex === index){
             if(this.props.audioState === "play"){
@@ -55,6 +60,7 @@ class Playlist extends Component{
 }
 
 const mapStateToProps = (state, ownProps) => {
+    // console.log(state.playlist.items);
     return {
         items: state.playlist.items,
         currentIndex: state.currentSong.currentIndex,

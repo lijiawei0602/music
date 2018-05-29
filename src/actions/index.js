@@ -10,13 +10,18 @@ function receivePlaylist(json){
 }
 
 //获取Playlist
-export function requestPlaylist(){
+export function requestPlaylist(items){
     return dispatch => {
         api.topList(1).then(res => {
             let arr = res.data.playlist.tracks;
             return filterPlaylist(arr);
         }).then(json => {
-            dispatch(receivePlaylist(json));
+            if(!items.length){
+                dispatch(receivePlaylist(json));
+            }else{
+                dispatch(receivePlaylist(items));
+            }
+            
         }).catch(e => {
             console.log(e);
         })
@@ -111,7 +116,7 @@ export function updateCurrentIndex(index){
     }
 }
 
-//删除playList
+//更新playList
 export function updatePlayList(items){
     return {
         type: types.UPDATE_PLAYLIST,
@@ -300,7 +305,7 @@ function parseTopDetail(json){
                 id: item.id,
                 name: item.name,
                 author: item.artists.length>0 && filterSinger(item.artists),
-                duration: item.duration || 1000,
+                duration: filterDuration(item.duration) || 1000,
                 image: item.album.picUrl || null,
                 url: `http://music.163.com/song/media/outer/url?id=${item.id}.mp3`,
                 album: item.album.name

@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { fetchDetail, updateCurrentIndex, switchAudio } from '../actions/index';
+import { fetchDetail, updateCurrentIndex, switchAudio, fetchCurrentSong, updatePlayList } from '../actions/index';
 import '../assets/css/Detail.less';
 import List from '../components//List.js';
 
 class Detail extends Component{
     constructor(props){
         super(props);
+        this.state = {
+            perIndex: -1
+        }
         this.getCurrentSong = this.getCurrentSong.bind(this);
     }
     componentDidMount(){
@@ -16,17 +19,22 @@ class Detail extends Component{
         dispatch(fetchDetail(id));
     }
 
-    getCurrentSong(index){
+    getCurrentSong(item,index){
         const { dispatch } = this.props;
-        if(this.props.currentIndex === index){
+        if(this.state.perIndex === index && this.props.currentSong.id === item.id){
             if(this.props.audioState === "play"){
                 dispatch(switchAudio("pause"));
             }else{
                 dispatch(switchAudio("play"));
             }
         }else{
-            dispatch(updateCurrentIndex(index));
+            let newPlaylist =[item, ...this.props.playlist];
+            dispatch(updatePlayList(newPlaylist));
+            dispatch(updateCurrentIndex(0));
         }
+        this.setState({
+            perIndex: index
+        });
     }
 
     render(){
@@ -41,7 +49,7 @@ class Detail extends Component{
                     <span className="Detail-time">专辑</span>
                 </div>
                 <div className="Detail-content">
-                    <List type={2} items={this.props.items} currentIndex={this.props.currentIndex} audioState={this.props.audioState} getCurrentSong={this.getCurrentSong}></List>
+                    <List type={2} perIndex={this.state.perIndex} items={this.props.items} currentIndex={this.props.currentIndex} audioState={this.props.audioState} getCurrentSong={this.getCurrentSong}></List>
                 </div>
             </div>
         )
@@ -51,8 +59,10 @@ class Detail extends Component{
 const mapStateToProps = (state, ownProps) => {
     return {
         items: state.top.detail,
+        playlist: state.playlist.items,
         currentIndex: state.currentSong.currentIndex,
-        audioState: state.currentSong.audioState
+        audioState: state.currentSong.audioState,
+        currentSong: state.currentSong.currentSong
     }
 }
 
