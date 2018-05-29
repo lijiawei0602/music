@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Route, Redirect, Switch } from 'react-router-dom';
 
 import App from '../containers/App.js';
 import Music from '../containers/Music.js';
@@ -9,18 +9,20 @@ import Search from '../containers/Search.js';
 import Mylist from '../containers/Mylist.js';
 import History from '../containers/History';
 import Comment from '../containers/Comment.js';
+import Detail from '../components/Detail.js';
 
 export default (
 	<App>
 		<Music>
-			<Route exact path='/' component={Playlist}/>
-			<Redirect to="/playlist"></Redirect>
-			<Route path="/playlist" component={Playlist}></Route>
-			<Route path="/top" component={Top}></Route>
-			<Route path="/search" component={Search}></Route>
-			<Route path="/mylist" component={Mylist}></Route>
-			<Route path="/history" component={History}></Route>
-			<Route path="/comment/:id" component={Comment}></Route>
+				<Route exact path='/' component={Playlist}/>
+				<Redirect to="/playlist"></Redirect>
+				<Route path="/playlist" component={Playlist}></Route>
+				<Route exact path="/top" component={Top}></Route>
+				<Route path="/search" component={Search}></Route>
+				<Route path="/mylist" component={Mylist}></Route>
+				<Route path="/history" component={History}></Route>
+				<Route path="/comment/:id" component={Comment}></Route>
+				<Route path='/top/detail/:id' component={Detail}/>
 		</Music>
 	</App>
 );

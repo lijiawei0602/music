@@ -47,7 +47,7 @@ class Playlist extends Component{
                     <span className="Playlist-time">时长</span>
                 </div>
                 <div className="Playlist-content">
-                    <List items={this.props.items} currentIndex={this.props.currentIndex} audioState={this.props.audioState} getCurrentSong={this.getCurrentSong} updatePlayList={this.updatePlayList}></List>
+                    <List type={1} items={this.props.items} currentIndex={this.props.currentIndex} audioState={this.props.audioState} getCurrentSong={this.getCurrentSong} updatePlayList={this.updatePlayList}></List>
                 </div>
             </div>
         )

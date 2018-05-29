@@ -55,6 +55,8 @@ function top(state={}, action){
             return Object.assign({}, state, {toplist: action.top});
         case types.RECEIVE_PERSONALIZED:
             return Object.assign({}, state, {personal: action.personal});
+        case types.RECEIVE_DETAIL:
+            return Object.assign({}, state, {detail: action.detail});
         default:
             return state;
     }

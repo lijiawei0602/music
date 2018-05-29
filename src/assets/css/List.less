@@ -15,12 +15,18 @@
         &:hover{
             .List-menu{
                 display: block;
-                span{
+                &-pause{
                     background-position: -80px 0;
                 }
+                &-play{
+                    background-position: -80px -200px;
+                }
                 &:hover{
-                    span{
+                    .List-menu-pause{
                         background-position: -120px 0;
+                    }
+                    .List-menu-play{
+                        background-position: -120px -200px;
                     }
                 }
             }
@@ -87,5 +93,12 @@
             background-repeat: no-repeat;
             // background-position: 0 0;
         }
+    }
+    &-album{
+        position: relative;
+        width: 60px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
     }
 }

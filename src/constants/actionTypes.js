@@ -26,7 +26,9 @@ export const SWITCH_AUDIOMODE = "SWITCH_AUDIOMODE";
 export const RECEIVE_HOTCOMMENT = "RECEIVE_HOTCOMMENT";
 //接收歌曲最新评论
 export const RECEIVE_NEWCOMMENT = "RECEIVE_NEWCOMMENT";
-//接收榜单
+//接收官方榜
 export const RECEIV_TOP = "RECEIVE_TOP";
-//接收推荐榜单
+//接收热门歌单
 export const RECEIVE_PERSONALIZED = "RECEIVE_PERSONALIZED";
+//接收歌单详情
+export const RECEIVE_DETAIL = "RECEIVE_DETAIL";

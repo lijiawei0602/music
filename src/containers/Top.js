@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Route, Link } from 'react-router-dom';
 
 import '../assets/css/Top.less';
 import { fetchTop, fetchPersonalized } from '../actions/index.js'; 
@@ -20,28 +20,32 @@ class Top extends Component{
         }
         return(
             <div className="Top">
-                <div className="Top-header">榜单</div>
+                <div className="Top-header">官方榜</div>
                 <div className="Top-content">
                     {
                         this.props.toplist.map((item, index) => {
                             return (
-                                <div className="Top-item" key={index}>
-                                    <img src={item.coverImgUrl} alt="" className="Top-item-img"/>
-                                    <div className="Top-item-name">{item.name}</div>
-                                </div>
+                                <Link to={`top/detail/${item.id}`} key={index}>
+                                    <div className="Top-item">
+                                        <img src={item.coverImgUrl} alt="" className="Top-item-img"/>
+                                        <div className="Top-item-name">{item.name}</div>
+                                    </div>
+                                </Link>
                             )
                         })
                     }
                 </div>
-                <div className="Top-header">热门榜单</div>
+                <div className="Top-header">热门歌单</div>
                 <div className="Top-content">
                     {
                         this.props.personal.map((item,index) => {
                             return (
-                                <div className="Top-item" key={index}>
-                                    <img src={item.picUrl} alt="" className="Top-item-img"/>
-                                    <div className="Top-item-name">{item.name}</div>
-                                </div>
+                                <Link to={`top/detail/${item.id}`} key={index}>
+                                    <div className="Top-item" key={index}>
+                                        <img src={item.picUrl} alt="" className="Top-item-img"/>
+                                        <div className="Top-item-name">{item.name}</div>
+                                    </div>
+                                </Link>
                             )
                         })
                     }

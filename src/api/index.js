@@ -40,3 +40,14 @@ export function getPersonalized(){
     const url = `${URL}/personalized`;
     return axios(url);
 }
+
+//获取歌单详情
+export function getDetail(id){
+    const url = `${URL}/playlist/detail?id=${id}`;
+    return axios(url);
+}
+
+export function getSong(id){
+    const url = `${URL}/song/detail?ids=${id}`;
+    return axios(url);
+}

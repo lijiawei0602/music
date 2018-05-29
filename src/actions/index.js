@@ -176,6 +176,7 @@ function receiveTop(top){
     }
 }
 
+//获取榜单
 export function fetchTop(){
     return dispatch => {
         api.getTop().then(res => {
@@ -191,6 +192,7 @@ export function fetchTop(){
     };
 }
 
+//接收热门歌单
 function receivePersonalized(personal){
     return {
         type: types.RECEIVE_PERSONALIZED,
@@ -198,6 +200,7 @@ function receivePersonalized(personal){
     }
 }
 
+//获取热门歌单
 export function fetchPersonalized(){
     return dispatch => {
         api.getPersonalized().then(res => {
@@ -210,10 +213,26 @@ export function fetchPersonalized(){
     };
 }
 
+//接收歌单详情
+function receiveDetail(detail){
+    return {
+        type: types.RECEIVE_DETAIL,
+        detail
+    }
+}
 
-
-
-
+export function fetchDetail(id){
+    return dispatch => {
+        api.getDetail(id).then(res => {
+            let arr = res.data.result.tracks;
+            return parseTopDetail(arr);     
+        }).then(json => {
+            dispatch(receiveDetail(json));
+        }).catch(e => {
+            console.log(e);
+        });
+    };
+}
 
 
 function filterPlaylist(json){
@@ -271,4 +290,23 @@ function filterCurrentTime(value){
     let minute = Math.floor(value / 60);
     let second = Math.floor(value % 60);
     return `${addZero(minute)}:${addZero(second)}`
+}
+
+function parseTopDetail(json){
+    let arr = [];
+    json.forEach(item => {
+        if(item.id){
+            var foo = {
+                id: item.id,
+                name: item.name,
+                author: item.artists.length>0 && filterSinger(item.artists),
+                duration: item.duration || 1000,
+                image: item.album.picUrl || null,
+                url: `http://music.163.com/song/media/outer/url?id=${item.id}.mp3`,
+                album: item.album.name
+            }
+            arr.push(foo);
+        }
+    });
+    return arr;
 }

@@ -18,14 +18,22 @@ class List extends Component{
                                 <div className="List-name">
                                     { item.name }
                                     <div className="List-menu">
-                                        <span className="List-menu-play" onClick={() => {this.props.getCurrentSong(index)}}></span>
+                                        <span className="List-menu-play" className={this.props.currentIndex === index && this.props.audioState === "play"? 'List-menu-play':'List-menu-pause'} onClick={() => {this.props.getCurrentSong(index)}}></span>
                                     </div>
                                 </div>
                                 <span className="List-author">{ item.author }</span>
-                                <span className="List-time">
-                                    <span>{ item.duration }</span>
-                                    <i className="List-menu-del" onClick={() => {this.props.updatePlayList(index)}}></i>
-                                </span>
+                                {
+                                    this.props.type === 1
+                                    ?
+                                    <span className="List-time">
+                                        <span>{ item.duration }</span>
+                                        <i className="List-menu-del" onClick={() => {this.props.updatePlayList(index)}}></i>
+                                    </span>
+                                    :
+                                    <span className="List-album">
+                                        {item.album}
+                                    </span>
+                                }
                             </div>
                         )
                     })

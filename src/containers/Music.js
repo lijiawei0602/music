@@ -18,7 +18,6 @@ class Music extends Component{
         this.updateCurrentTime = this.updateCurrentTime.bind(this);
         this.updateVolume = this.updateVolume.bind(this);
         this.changeMode = this.changeMode.bind(this);
-        this.selectBtn = this.selectBtn.bind(this);
     }
 
     componentDidMount(){
@@ -152,10 +151,6 @@ class Music extends Component{
         dispatch(updateCurrentTime(time));
     }
 
-    selectBtn(e){
-        console.log(e.target.parentNode.children);
-        // e.target.parentNode.children
-    }
 
     render(){
         return(
