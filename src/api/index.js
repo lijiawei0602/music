@@ -47,7 +47,14 @@ export function getDetail(id){
     return axios(url);
 }
 
-export function getSong(id){
-    const url = `${URL}/song/detail?ids=${id}`;
+//获取热门歌手
+export function getHotSinger(){
+    const url = `${URL}/search/hot`;
+    return axios(url);
+}
+
+//搜索
+export function search(keywords,limit=30,offset=0){
+    const url = `${URL}/search?keywords=${keywords}&limit=${limit}&offset=${offset}`;
     return axios(url);
 }

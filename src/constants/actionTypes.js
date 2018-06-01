@@ -32,3 +32,7 @@ export const RECEIV_TOP = "RECEIVE_TOP";
 export const RECEIVE_PERSONALIZED = "RECEIVE_PERSONALIZED";
 //接收歌单详情
 export const RECEIVE_DETAIL = "RECEIVE_DETAIL";
+//接收热门歌手
+export const RECEIVE_HOTSINGER = "RECEIVE_HOTSINGER";
+//搜索
+export const RECEIVE_SEARCH = "RECEIVE_SEARCH";

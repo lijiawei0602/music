@@ -15,7 +15,7 @@ export default (
 	<App>
 		<Music>
 				<Route exact path='/' component={Playlist}/>
-				<Redirect to="/playlist"></Redirect>
+				{/* <Redirect to="/playlist"></Redirect> */}
 				<Route path="/playlist" component={Playlist}></Route>
 				<Route exact path="/top" component={Top}></Route>
 				<Route path="/search" component={Search}></Route>

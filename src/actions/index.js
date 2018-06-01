@@ -239,6 +239,50 @@ export function fetchDetail(id){
     };
 }
 
+//接收热门歌手
+function receiveHotSinger(singer){
+    return{
+        type: types.RECEIVE_HOTSINGER,
+        singer
+    }
+}
+
+export function fetchHotSinger(){
+    return dispatch => {
+        api.getHotSinger().then(res => {
+            return res.data.result.hots;
+        }).then(json => {
+            dispatch(receiveHotSinger(json));
+        }).catch(e => {
+            console.log(e);
+        });
+    };
+}
+
+function receiveSearch(searchList){
+    return {
+        type: types.RECEIVE_SEARCH,
+        searchList
+    }
+}
+
+export function fetchSearch(keywords,limit,offset,lastSearchList=[]){
+    return dispatch => {
+        api.search(keywords,limit,offset).then(res => {
+            return res.data.result.songs;
+        }).then(json => {
+            json = parseTopDetail(json);
+            dispatch(receiveSearch(lastSearchList.concat(json)));
+        }).catch(e => {
+            console.log(e);
+        });
+    };
+}
+
+
+
+
+
 
 function filterPlaylist(json){
     let arr = [];

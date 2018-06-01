@@ -32,7 +32,7 @@ class Top extends Component{
         let scrollTop = this.refs.top.scrollTop;
         let topOffsetTop = this.refs.top.offsetTop;
         for(let i=0; i<arr.length; i++){
-            if(arr[i].offsetTop - topOffsetTop <= clientH + scrollTop + 80){
+            if(arr[i].offsetTop - topOffsetTop <= clientH + scrollTop + 150){
                 arr[i].src = arr[i].getAttribute("data-src");
             }
         }   

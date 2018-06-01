@@ -2,11 +2,8 @@ import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
 import * as types from '../constants/actionTypes.js';
 
-const initialState = {
-    items: [],
-};
 
-function playlist(state=initialState, action){
+function playlist(state={items:[]}, action){
     switch(action.type){
         case types.RECEIVE_PLAYLIST:
             return Object.assign({}, state, {items: action.items});
@@ -62,10 +59,22 @@ function top(state={}, action){
     }
 }
 
+function search(state={searchList:[]}, action){
+    switch(action.type){
+        case types.RECEIVE_HOTSINGER:
+            return Object.assign({}, state, {singer: action.singer});
+        case types.RECEIVE_SEARCH:
+            return Object.assign({}, state, {searchList: action.searchList});
+        default:
+            return state;
+    }
+}
+
 export default combineReducers({
     playlist,
     Main,
     currentSong,
     top,
+    search,
 	routing:routerReducer
 });

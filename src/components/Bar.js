@@ -200,16 +200,10 @@ class Bar extends Component{
 
     switchAudio(){
         const { dispatch } = this.props;
-        if(this.state.isPlay === false){
+        if(this.props.audioState === "pause"){
             dispatch(switchAudio("play"));
-            this.setState({
-                isPlay: !this.state.isPlay
-            })
         }else{
             dispatch(switchAudio("pause"));
-            this.setState({
-                isPlay: !this.state.isPlay
-            })
         }
     }
 
