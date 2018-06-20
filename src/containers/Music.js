@@ -7,6 +7,7 @@ import Playlist from './Playlist';
 import Main from './Main';
 import Bar from '../components/Bar.js';
 import { fetchCurrentSong, updateCurrentIndex, switchAudio,fetchMusicUrl, updateCurrentTime } from '../actions/index';
+import { addHistoryList } from '../constants/index.js';
 
 class Music extends Component{
     constructor(props){
@@ -36,7 +37,9 @@ class Music extends Component{
             let currentIndex = nextProps.currentIndex;
             let index = currentIndex % nextProps.items.length;
             let id = nextProps.items[index].id;
+            let t = nextProps.items[index];
             dispatch(fetchCurrentSong(id));
+            addHistoryList(t);
         }
 
         if(nextProps.currentSong && this.props.currentSong){

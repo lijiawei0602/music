@@ -10,7 +10,10 @@ class List extends Component{
 
     render(){
         if(this.props.type === 1){
-            return (
+            if(!this.props.items.length){
+                return null;
+           }
+           return (
                 <div className="List">
                     {
                         this.props.items.map((item,index) => {
@@ -20,7 +23,7 @@ class List extends Component{
                                     <div className="List-name">
                                         { item.name }
                                         <div className="List-menu">
-                                            <span className="List-menu-play" className={this.props.currentIndex === index && this.props.audioState === "play"? 'List-menu-play':'List-menu-pause'} onClick={() => {this.props.getCurrentSong(item.id,index)}}></span>
+                                            <span className="List-menu-play" className={this.props.currentIndex === index && this.props.audioState === "play"? 'List-menu-play':'List-menu-pause'} onClick={() => {this.props.getCurrentSong(item.id,index,item)}}></span>
                                         </div>
                                     </div>
                                     <span className="List-author">{ item.author }</span>

@@ -346,6 +346,13 @@ export function fetchUserPlayList(id){
     }
 }
 
+export function receiveHistoryList(){
+    return {
+        type: types.RECEIVE_HISTORY,
+        list: JSON.parse(localStorage.getItem("history"))
+    }
+}
+
 
 
 function filterPlaylist(json){

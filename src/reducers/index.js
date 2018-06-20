@@ -91,6 +91,15 @@ function mylist(state={}, action){
     }
 }
 
+function history(state={list: []}, action){
+    switch(action.type){
+        case types.RECEIVE_HISTORY:
+            return Object.assign({}, state, {list: action.list});
+        default:
+            return state;
+    }
+}
+
 export default combineReducers({
     playlist,
     Main,
@@ -99,5 +108,6 @@ export default combineReducers({
     search,
     login,
     mylist,
+    history,
 	routing:routerReducer
 });
