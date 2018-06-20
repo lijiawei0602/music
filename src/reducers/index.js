@@ -70,11 +70,34 @@ function search(state={searchList:[]}, action){
     }
 }
 
+function login(state={userid: localStorage.getItem("userId") || -1}, action){
+    switch(action.type){
+        case types.RECEIVE_USERID:
+            return Object.assign({}, state, {userid: action.id});
+        case types.RECEIVE_LOGIN:
+            return Object.assign({}, state, {res: action.res});
+        
+        default:
+            return state;
+    }
+}
+
+function mylist(state={}, action){
+    switch(action.type){
+        case types.RECEIVE_USERPLAYLIST:
+            return Object.assign({}, state, { list: action.mylist });
+        default:
+            return state;
+    }
+}
+
 export default combineReducers({
     playlist,
     Main,
     currentSong,
     top,
     search,
+    login,
+    mylist,
 	routing:routerReducer
 });

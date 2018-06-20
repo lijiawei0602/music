@@ -279,8 +279,72 @@ export function fetchSearch(keywords,limit,offset,lastSearchList=[]){
     };
 }
 
+//获取用户Id
+function receiveUserId(id){
+    return {
+        type: types.RECEIVE_USERID,
+        id
+    }
+}
 
+//登录
+function receiveLogin(res){
+    return {
+        type: types.RECEIVE_LOGIN,
+        res
+    }
+}
 
+export function fetchLogin(mobile, pass){
+    return dispatch => {
+        api.login(mobile, pass).then(res => {
+            return res.data;
+        }).then(json => {
+            dispatch(receiveLogin(json));
+            if(json.code === 200){
+                dispatch(receiveUserId(json.account.id));
+                localStorage.setItem("userId", json.account.id);
+            }
+        }).catch(e => {
+            console.log(e);
+        });
+    }
+}
+
+export function fetchUserInfo(id){
+    return dispatch => {
+        api.getUserInfo(id).then(res => {
+            return res.data;
+        }).then(json => {
+            dispatch(receiveLogin(json));
+        })
+    }
+}
+
+export function exit(){
+    localStorage.removeItem("userId");
+    return {
+        type: types.RECEIVE_LOGIN,
+        res: undefined
+    }
+}
+
+function receiveUserPlayList(json){
+    return {
+        type: types.RECEIVE_USERPLAYLIST,
+        mylist: json
+    }
+}
+
+export function fetchUserPlayList(id){
+    return dispatch => {
+        api.getUserPlayList(id).then(res => {
+            return res.data;
+        }).then(json => {
+            dispatch(receiveUserPlayList(json.playlist));
+        })
+    }
+}
 
 
 

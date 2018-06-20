@@ -36,3 +36,11 @@ export const RECEIVE_DETAIL = "RECEIVE_DETAIL";
 export const RECEIVE_HOTSINGER = "RECEIVE_HOTSINGER";
 //搜索
 export const RECEIVE_SEARCH = "RECEIVE_SEARCH";
+//获取用户ID
+export const RECEIVE_USERID = "RECEIVE_USERID";
+//登录
+export const RECEIVE_LOGIN = "RECEIVE_LOGIN";
+//获取用户详情
+export const RECEIVE_USERINFO = "RECEIVE_USERINFO";
+//获取用户歌单
+export const RECEIVE_USERPLAYLIST = "RECEIVE_USERPLAYLIST";

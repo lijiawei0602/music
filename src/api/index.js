@@ -58,3 +58,21 @@ export function search(keywords,limit=30,offset=0){
     const url = `${URL}/search?keywords=${keywords}&limit=${limit}&offset=${offset}`;
     return axios(url);
 }
+
+//登录
+export function login(mobile, pass){
+    const url = `${URL}/login/cellphone?phone=${mobile}&password=${pass}`;
+    return axios(url);
+}
+
+//获取用户信息
+export function getUserInfo(id){
+    const url = `${URL}/user/detail?uid=${id}`;
+    return axios(url);
+}
+
+//获取用户歌单
+export function getUserPlayList(id){
+    const url = `${URL}/user/playlist?uid=${id}`;
+    return axios(url);
+}

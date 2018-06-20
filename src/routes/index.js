@@ -19,10 +19,11 @@ export default (
 				<Route path="/playlist" component={Playlist}></Route>
 				<Route exact path="/top" component={Top}></Route>
 				<Route path="/search" component={Search}></Route>
-				<Route path="/mylist" component={Mylist}></Route>
+				<Route exact path="/mylist" component={Mylist}></Route>
 				<Route path="/history" component={History}></Route>
 				<Route path="/comment/:id" component={Comment}></Route>
 				<Route path='/top/detail/:id' component={Detail}/>
+				<Route path='/mylist/detail/:id' component={Detail}></Route>
 		</Music>
 	</App>
 );

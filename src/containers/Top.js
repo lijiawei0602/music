@@ -4,7 +4,7 @@ import { Route, Link } from 'react-router-dom';
 
 import '../assets/css/Top.less';
 import { fetchTop, fetchPersonalized } from '../actions/index.js'; 
-import logo from '../assets/img/logo.svg';
+import logo from '../assets/img/default.png';
 import { _throttle } from '../constants/util.js';
 
 class Top extends Component{
