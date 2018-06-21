@@ -4,23 +4,36 @@ import { connect } from 'react-redux';
 import { requestPlaylist, switchAudio, updateCurrentIndex, updatePlayList } from '../actions/index.js';
 import '../assets/css/Playlist.less';
 import List from '../components/List.js';
+import Loading from '../components/Loading.js';
 
 class Playlist extends Component{
     constructor(props){
         super(props);
+        this.state = {
+            isShow: true
+        }
         this.getCurrentSong = this.getCurrentSong.bind(this);
         this.updatePlayList = this.updatePlayList.bind(this);
     }
-
-    componentDidMount(){
+    
+    componentWillMount(){
         const { dispatch } = this.props;
         let items = this.props.items;
         dispatch(requestPlaylist(items));
+        if(this.props.items.length !== 0){
+            this.setState({
+                isShow: false
+            })
+        }
     }
 
-    // componentWillReceiveProps(nextProps){
-    //     console.log(nextProps.items);
-    // }
+    componentWillReceiveProps(nextProps){
+        if(nextProps.items.length !== 0){
+            this.setState({
+                isShow: false
+            })
+        }
+    }
 
     getCurrentSong(id,index){
         const { dispatch } = this.props;
@@ -52,6 +65,7 @@ class Playlist extends Component{
                     <span className="Playlist-time">时长</span>
                 </div>
                 <div className="Playlist-content">
+                    <Loading show={this.state.isShow}></Loading>
                     <List type={1} items={this.props.items} currentIndex={this.props.currentIndex} audioState={this.props.audioState} getCurrentSong={this.getCurrentSong} updatePlayList={this.updatePlayList}></List>
                 </div>
             </div>

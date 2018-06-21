@@ -5,6 +5,7 @@ import '../assets/css/search.less';
 import List from '../components/List.js';
 import { _throttle } from '../constants/util.js';
 import { fetchHotSinger, fetchSearch,switchAudio, updateCurrentIndex, updatePlayList } from '../actions/index.js';
+import Loading from '../components/Loading';
 
 class Search extends Component{
     constructor(props){
@@ -12,7 +13,8 @@ class Search extends Component{
         this.state = {
             perIndex: -1,
             searchContent: '',
-            page: 1
+            page: 1,
+            isShow: false
         }
         this.getCurrentSong = this.getCurrentSong.bind(this);
         this.keyEnter = this.keyEnter.bind(this);
@@ -25,11 +27,13 @@ class Search extends Component{
         dispatch(fetchHotSinger());
     }
 
-    // componentWillReceiveProps(nextProps){
-    //     if(nextProps.searchList !== this.props.searchList){
-    //         console.log(nextProps.searchList);
-    //     }
-    // }
+    componentWillReceiveProps(nextProps){
+        if(nextProps.searchList !== this.props.searchList){
+            this.setState({
+                isShow: false
+            })
+        }
+    }
 
     componentDidUpdate(){
         if(this.props.searchList.length){
@@ -41,6 +45,9 @@ class Search extends Component{
     scroll(e){
         let target = e.target || e.srcElement;
         if(target.scrollTop + target.clientHeight >= target.scrollHeight){
+            this.setState({
+                isShow: true
+            });
             const { dispatch } = this.props;
             let limit = 30;
             let offset = (this.state.page -1 ) * limit;
@@ -61,6 +68,7 @@ class Search extends Component{
                 alert("输入内容不能为空");
             }else{
                 this.setState({
+                    isShow: true,
                     searchContent: val
                 });
                 dispatch(fetchSearch(val));
@@ -87,6 +95,9 @@ class Search extends Component{
     }
 
     selectHot(e){
+        this.setState({
+            isShow: true
+        })
         const { dispatch } = this.props;
         let target = e.target || e.srcElement;
         let text = target.innerText;
@@ -100,6 +111,7 @@ class Search extends Component{
         }
         return(
             <div className="Search">
+                <Loading show={this.state.isShow}></Loading>
                 <div className="Search-header">
                 {
                     this.props.singer.slice(0,5).map((item, index) => {

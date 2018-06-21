@@ -4,12 +4,14 @@ import { connect } from 'react-redux';
 import { fetchDetail, updateCurrentIndex, switchAudio, fetchCurrentSong, updatePlayList } from '../actions/index';
 import '../assets/css/Detail.less';
 import List from '../components//List.js';
+import Loading from './Loading';
 
 class Detail extends Component{
     constructor(props){
         super(props);
         this.state = {
-            perIndex: -1
+            perIndex: -1,
+            isShow: true
         }
         this.getCurrentSong = this.getCurrentSong.bind(this);
     }
@@ -17,6 +19,14 @@ class Detail extends Component{
         const { dispatch } = this.props;
         const id = this.props.match.params.id;
         dispatch(fetchDetail(id));
+    }
+
+    componentWillReceiveProps(nextProps){
+        if(nextProps.items){
+            this.setState({
+                isShow: false
+            })
+        }
     }
 
     getCurrentSong(item,index){
@@ -49,6 +59,7 @@ class Detail extends Component{
                     <span className="Detail-time">专辑</span>
                 </div>
                 <div className="Detail-content">
+                    <Loading show={this.state.isShow}></Loading>
                     <List type={2} perIndex={this.state.perIndex} items={this.props.items} currentIndex={this.props.currentIndex} audioState={this.props.audioState} getCurrentSong={this.getCurrentSong}></List>
                 </div>
             </div>

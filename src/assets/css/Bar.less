@@ -43,21 +43,26 @@
             margin-top: 5px;
             padding: 5px;
             .prog-outer{
+                position: absolute;
                 width: 100%;
                 height: 2px;
-                background-color: hsla(0, 0%, 100%, .15);
+                background-color: hsla(0, 0%, 100%, .2);
             }
-            .prog-inner{
+            .prog-buffer{
+                position: absolute;
                 width: 0;
                 height: 2px;
-                margin-top: -1px;
+                background: hsla(0, 0%, 100%, .15);
+            }
+            .prog-inner{
+                position: absolute;
+                width: 0;
+                height: 2px;
                 background-color: #fff;
             }
             .prog-dot{
                 position: absolute;
-                top: 50%;
                 left: 0;
-                // right: 0px;
                 width: 10px;
                 height: 10px;
                 border-radius: 50%;

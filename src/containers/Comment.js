@@ -7,12 +7,14 @@ import '../assets/css/Comment.less';
 import { _throttle } from '../constants/util.js';
 
 import { fetchComment, reFetchComment } from '../actions/index';
+import Loading from '../components/Loading.js';
 
 class Comment extends Component{
     constructor(props){
         super(props);
         this.state = {
-            reqCount: 1
+            reqCount: 1,
+            isShow: true
         }
         this.scroll = this.scroll.bind(this);
     }
@@ -21,6 +23,14 @@ class Comment extends Component{
         const { dispatch } = this.props;
         let id = this.props.match.params.id;
         dispatch(fetchComment(id));
+    }
+
+    componentWillReceiveProps(nextProps){
+        if(nextProps.hotComment && nextProps.newComment){
+            this.setState({
+                isShow: false
+            })
+        }
     }
 
     componentDidUpdate(){
@@ -40,6 +50,7 @@ class Comment extends Component{
             let lastNewComment = this.props.newComment;
             let hotComment = this.props.hotComment;
             this.setState({
+                isShow: true,
                 reqCount: this.state.reqCount+1
             });
             dispatch(reFetchComment(id,limit,offset,hotComment,lastNewComment));
@@ -48,7 +59,11 @@ class Comment extends Component{
 
     render(){
         if(!this.props.hotComment || !this.props.newComment){
-            return null;
+            return (
+                <div className="Comment">
+                    <Loading show={this.state.isShow}></Loading>
+                </div>
+            );
         }else{
             return (
                 <div className="Comment" ref="comment">

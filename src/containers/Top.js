@@ -5,18 +5,30 @@ import { Route, Link } from 'react-router-dom';
 import '../assets/css/Top.less';
 import { fetchTop, fetchPersonalized } from '../actions/index.js'; 
 import logo from '../assets/img/default.png';
+import Loading from '../components/Loading.js';
 import { _throttle } from '../constants/util.js';
 
 class Top extends Component{
     constructor(props){
         super(props);
+        this.state = {
+            isShow: true
+        };
         this.lazyload = this.lazyload.bind(this);
     }
 
-    componentDidMount(){
+    componentWillMount(){
         const { dispatch } = this.props;
         dispatch(fetchTop());
         dispatch(fetchPersonalized());
+    }
+
+    componentWillReceiveProps(nextProps){
+        if(nextProps.personal && nextProps.toplist){
+            this.setState({
+                isShow: false
+            })
+        }
     }
 
     componentDidUpdate(){
@@ -41,7 +53,11 @@ class Top extends Component{
 
     render(){
         if(!this.props.toplist || !this.props.personal){
-            return null;
+            return (
+                <div className="Top">
+                    <Loading show={this.state.isShow}></Loading>
+                </div>
+            );
         }
         return(
             <div className="Top" ref="top">

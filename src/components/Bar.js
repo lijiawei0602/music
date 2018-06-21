@@ -49,11 +49,13 @@ class Bar extends Component{
     }
 
     componentWillReceiveProps(nextProps){
-        if(nextProps.currentSong && nextProps.currentTime){
+        if(nextProps.currentSong && nextProps.currentTime && nextProps.currentBuffer){
             if(nextProps.currentSong.duration){
                 let percent = this.filterTime(nextProps.currentTime) / this.filterTime(nextProps.currentSong.duration);
                 let allWidth = this.refs.prog.clientWidth - this.props.dotWidth;
                 let progWidth = percent * allWidth;
+                let bufferWidth = nextProps.currentBuffer * allWidth;
+                this.refs.buffer.style.width = bufferWidth + "px";
                 this.moveTo(progWidth);
             }
         }
@@ -280,6 +282,7 @@ class Bar extends Component{
                     <div className="Bar-music-time">{this.props.currentTime || '00:00'}/{this.props.currentSong.duration}</div>
                     <div className="Bar-music-prog" ref="prog" onClick={this.barClick}>
                         <div className="prog-outer"></div>
+                        <div className="prog-buffer" ref="buffer"></div>
                         <div className="prog-inner" ref="progInner">
                             <div className="prog-dot" ref="progDot" onMouseDown={this.barDown}></div>
                         </div>

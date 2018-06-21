@@ -6,12 +6,15 @@ import '../assets/css/Music.less';
 import Playlist from './Playlist';
 import Main from './Main';
 import Bar from '../components/Bar.js';
-import { fetchCurrentSong, updateCurrentIndex, switchAudio,fetchMusicUrl, updateCurrentTime } from '../actions/index';
+import { fetchCurrentSong, updateCurrentIndex, switchAudio,fetchMusicUrl, updateCurrentTime, updateCurrentBuffer } from '../actions/index';
 import { addHistoryList } from '../constants/index.js';
 
 class Music extends Component{
     constructor(props){
         super(props);
+        this.state = {
+            currentBuffer: 0
+        };
         this.changeLayout = this.changeLayout.bind(this);
         this.prevClick = this.prevClick.bind(this);
         this.nextClick = this.nextClick.bind(this);
@@ -31,6 +34,7 @@ class Music extends Component{
         if(nextProps.items.length !== this.props.items.length){
             let id = nextProps.items[0].id;
             dispatch(fetchCurrentSong(id));
+            dispatch(updateCurrentBuffer(0));
         }
 
         if(nextProps.currentIndex !== this.props.currentIndex){
@@ -39,6 +43,7 @@ class Music extends Component{
             let id = nextProps.items[index].id;
             let t = nextProps.items[index];
             dispatch(fetchCurrentSong(id));
+            dispatch(updateCurrentBuffer(0));
             addHistoryList(t);
         }
 
@@ -72,11 +77,16 @@ class Music extends Component{
             let currentTime;
 
             audio.addEventListener("timeupdate", (function(){
-                currentTime = audio.currentTime;
+                let bufferIndex = audio.buffered.length;
+                if(bufferIndex > 0 && audio.buffered != undefined) {
+                    let buffer = audio.buffered.end(bufferIndex - 1) / audio.duration;
+                    currentTime = audio.currentTime;
+                    dispatch(updateCurrentBuffer(buffer));
+                }
                 dispatch(updateCurrentTime(currentTime));
                 //判断是否播放完毕
                 if(audio.ended){
-                this.changeMode();
+                    this.changeMode();
                 }
             }).bind(this),false);
 
@@ -177,7 +187,7 @@ class Music extends Component{
                     </div>
                 </div>
                 <div className="Music-bar">
-                    <Bar items={this.props.items} currentIndex={this.props.currentIndex} currentSong={this.props.currentSong} currentTime={this.props.currentTime} audioState={this.props.audioState} audioMode={this.props.audioMode} updateCurrentTime={this.updateCurrentTime} updateVolume={this.updateVolume} prevClick={this.prevClick} nextClick={this.nextClick}></Bar>
+                    <Bar items={this.props.items} currentIndex={this.props.currentIndex}  currentBuffer={this.props.currentBuffer} currentSong={this.props.currentSong} currentTime={this.props.currentTime} audioState={this.props.audioState} audioMode={this.props.audioMode} updateCurrentTime={this.updateCurrentTime} updateVolume={this.updateVolume} prevClick={this.prevClick} nextClick={this.nextClick}></Bar>
                 </div>
                 <div className="Music-bg" ref="bg"></div>
                 <div className="Music-mask"></div>
@@ -191,6 +201,7 @@ const mapStateToProps = (state, ownProps) => {
     return {
         currentSong: state.currentSong.currentSong,
         currentTime: state.currentSong.currentTime,
+        currentBuffer: state.currentSong.currentBuffer,
         items: state.playlist.items,
         currentIndex: state.currentSong.currentIndex,
         audioState: state.currentSong.audioState,

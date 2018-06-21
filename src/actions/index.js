@@ -353,6 +353,13 @@ export function receiveHistoryList(){
     }
 }
 
+export function updateCurrentBuffer(buffer){
+    return {
+        type: types.RECEIVE_BUFFER,
+        buffer
+    }
+}
+
 
 
 function filterPlaylist(json){

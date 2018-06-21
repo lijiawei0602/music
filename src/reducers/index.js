@@ -23,7 +23,7 @@ function Main(state={ lyric: '' }, action){
     }
 }
 
-function currentSong(state={currentIndex: 0, audioState: "pause", audioMode: "order", newComment:[]}, action){
+function currentSong(state={currentIndex: 0, audioState: "pause", audioMode: "order", newComment:[],currentBuffer:0}, action){
     switch(action.type){
         case types.RECEIVE_CURRENTSONG:
             return Object.assign({}, state, {currentSong: action.currentSong});
@@ -41,6 +41,8 @@ function currentSong(state={currentIndex: 0, audioState: "pause", audioMode: "or
             return Object.assign({}, state, {hotComment: action.comment});
         case types.RECEIVE_NEWCOMMENT:
             return Object.assign({}, state, {newComment: action.comment});
+        case types.RECEIVE_BUFFER:
+            return Object.assign({}, state, {currentBuffer: action.buffer});
         default:
             return state;
     }

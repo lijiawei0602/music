@@ -6,11 +6,15 @@ import '../assets/css/Mylist.less';
 import logo from '../assets/img/default.png';
 import { _throttle } from '../constants/util.js';
 import { fetchUserPlayList } from '../actions/index.js';
+import Loading from '../components/Loading';
 
 
 class Mylist extends Component{
     constructor(props){
         super(props);
+        this.state = {
+            isShow: true
+        }
         this.lazyload = this.lazyload.bind(this);
     }
 
@@ -28,7 +32,12 @@ class Mylist extends Component{
     componentWillReceiveProps(nextProps){
         if(nextProps.userid !== -1){
             const { dispatch } = this.props;
-            dispatch(fetchUserPlayList(nextProps.userid));
+            // dispatch(fetchUserPlayList(nextProps.userid));
+        }
+        if(nextProps.list !== this.props.list){
+            this.setState({
+                isShow: false
+            })
         }
     }
     
@@ -52,10 +61,17 @@ class Mylist extends Component{
     }
 
     render(){
-        if(!this.props.res || !this.props.list){
+        if(!this.props.res){
             return(
                 <div className="Mylist-null">
                     暂无登录，请先登录
+                </div>
+            )
+        }
+        if(!this.props.list){
+            return (
+                <div className="Mylist">
+                    <Loading show={this.state.isShow}></Loading>
                 </div>
             )
         }
